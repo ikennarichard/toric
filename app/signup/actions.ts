@@ -4,14 +4,14 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export type FormState = {
+type FormState = {
   message: string;
 };
 
 export async function signup(
   prevState: FormState,
   formData: FormData,
-): Promise<FormState> {
+) {
   const supabase = createClient();
 
   const data = {
@@ -27,17 +27,18 @@ export async function signup(
     },
   };
 
+  console.log(data)
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
-    redirect("/login?message=Error signing up");
+    redirect(`/login?message=${error}`);
   }
 
   revalidatePath("/", "layout");
-
-  return {
-    message: "success",
-  };
+  redirect('/private')
+  // return {
+    // message: "success",
+  // };
 }
 
 export async function confirmSignup(email: string, formData: FormData) {
