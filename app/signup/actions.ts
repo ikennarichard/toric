@@ -8,10 +8,7 @@ type FormState = {
   message: string;
 };
 
-export async function signup(
-  prevState: FormState,
-  formData: FormData,
-) {
+export async function signup(prevState: FormState, formData: FormData) {
   const supabase = createClient();
 
   const data = {
@@ -27,7 +24,7 @@ export async function signup(
     },
   };
 
-  console.log(data)
+  console.log(data);
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
@@ -35,9 +32,9 @@ export async function signup(
   }
 
   revalidatePath("/", "layout");
-  redirect('/private')
+  redirect("/private");
   // return {
-    // message: "success",
+  // message: "success",
   // };
 }
 
