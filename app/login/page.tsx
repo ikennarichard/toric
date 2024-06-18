@@ -14,6 +14,7 @@ export default async function LoginPage() {
   if (user) {
     return redirect("/private");
   }
+
   return (
     <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 m-auto">
       <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">

@@ -14,8 +14,8 @@ export default function SignupPage() {
 
   return (
     <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-5 m-auto">
-      {formState.message === "success" ? (
-        <form action={updateUserEmail}>
+      {/* {formState.message === "success" ? (
+        <form action={updateUserEmail} className="shadow-lg transform scale-0 transition-transform duration-300">
           <div className="mb-4">
             <label
               htmlFor="token"
@@ -33,7 +33,7 @@ export default function SignupPage() {
           </div>
           <SubmitButton text="Confirm" />
         </form>
-      ) : (
+      ) : ( */}
         <form action={formAction}>
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
             Setup your account
@@ -91,14 +91,14 @@ export default function SignupPage() {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="phone"
+              htmlFor="phone_number"
               className="block text-gray-700 font-medium mb-2"
             >
               Phone Number
             </label>
             <input
               type="number"
-              id="phone"
+              id="phone_number"
               name="phone_number"
               required
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -139,7 +139,7 @@ export default function SignupPage() {
           </div>
           <SubmitButton text="Continue" />
         </form>
-      )}
+      {/* )} */}
     </div>
   );
 }
