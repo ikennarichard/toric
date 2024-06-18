@@ -1,14 +1,28 @@
-import { redirect } from 'next/navigation'
-
-import { createClient } from '@/utils/supabase/server'
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
+import Header from "../components/Header";
 
 export default async function PrivatePage() {
-  const supabase = createClient()
+  const supabase = createClient();
 
-  const { data, error } = await supabase.auth.getUser()
-  if (error || !data?.user) {
-    redirect('/login')
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+  if (error || !user) {
+    redirect("/login");
   }
 
-  return <p>Hello {data.user.email}</p>
+  let metadata = user.user_metadata;
+
+  return (
+    <main className="p-12 grid grid-cols-[auto_1fr]">
+      <div className="border border-blue-100 p-6">
+        <Header />
+      </div>
+      <div className="border border-blue-100 p-4">
+        <p className="text-white mt-3">Hello, {metadata.first_name!}</p>
+      </div>
+    </main>
+  );
 }
