@@ -4,11 +4,11 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-type FormState = {
-  message: string;
-};
+// type FormState = {
+//   message: string;
+// };
 
-export async function signup(prevState: FormState, formData: FormData) {
+export async function signup(formData: FormData) {
   const supabase = createClient();
 
   const data = {

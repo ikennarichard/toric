@@ -6,11 +6,11 @@ import { useRef } from "react";
 import { useFormState } from "react-dom";
 
 export default function SignupPage() {
-  const [formState, formAction] = useFormState(signup, {
-    message: "",
-  });
-  const emailRef = useRef<string>(null!);
-  const updateUserEmail = confirmSignup.bind(null, emailRef.current);
+  // const [formState, formAction] = useFormState(signup, {
+  //   message: "",
+  // });
+  // const emailRef = useRef<string>(null!);
+  // const updateUserEmail = confirmSignup.bind(null, emailRef.current);
 
   return (
     <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-5 m-auto">
@@ -34,7 +34,7 @@ export default function SignupPage() {
           <SubmitButton text="Confirm" />
         </form>
       ) : ( */}
-      <form action={formAction}>
+      <form action={signup}>
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
           Setup your account
         </h2>
@@ -115,9 +115,6 @@ export default function SignupPage() {
             type="email"
             id="email"
             name="email"
-            onChange={(e) => {
-              emailRef.current = e.target.value;
-            }}
             required
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
