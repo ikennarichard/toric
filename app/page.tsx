@@ -11,8 +11,5 @@ export default async function Home() {
     redirect("/private");
   }
 
-  return (
-    <main className="flex flex-col justify-between p-12">
-    </main>
-  );
+  return <main className="flex flex-col justify-between p-12"></main>;
 }

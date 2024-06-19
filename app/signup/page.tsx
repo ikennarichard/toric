@@ -20,20 +20,20 @@ import { useEffect } from "react";
 export default function SignupPage() {
   const [formState, formAction] = useFormState(signup, {
     message: null,
-    error: '',
-    status: ''
+    error: "",
+    status: "",
   });
 
   useEffect(() => {
-    if (formState.status === 'failed') {
-      toast.error(formState.error)
+    if (formState.status === "failed") {
+      toast.error(formState.error);
     }
-  }, [formState])
+  }, [formState]);
 
   // const {
-	// 	register,
-	// 	formState: {errors}
-	//  } = useForm<Inputs>();
+  // 	register,
+  // 	formState: {errors}
+  //  } = useForm<Inputs>();
 
   return (
     <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-5 m-auto -mt-6">

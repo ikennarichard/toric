@@ -2,22 +2,18 @@ import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 import { createClient } from "./utils/supabase/server";
 
-
-
-
-
 export async function middleware(request: NextRequest) {
   const supabase = createClient();
-  const { pathname } = request.nextUrl
+  const { pathname } = request.nextUrl;
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user && (pathname == '/login') || (user && pathname == '/signup')) {
-    return NextResponse.redirect(new URL('/private', request.url));
+  if ((user && pathname == "/login") || (user && pathname == "/signup")) {
+    return NextResponse.redirect(new URL("/private", request.url));
   }
-  
+
   return await updateSession(request);
 }
 

@@ -1,10 +1,10 @@
-'use client'
-import Link from "next/link"
-import SubmitButton from "./SubmitButton"
-import signout from "../signout/actions"
+"use client";
+import Link from "next/link";
+import SubmitButton from "./SubmitButton";
+import signout from "../signout/actions";
 
 export default function SideNav() {
- return (
+  return (
     <>
       <nav>
         <ul className="flex flex-col text-white gap-4">
@@ -23,5 +23,5 @@ export default function SideNav() {
         </ul>
       </nav>
     </>
-  )
+  );
 }

@@ -3,7 +3,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import {z} from 'zod';
+import { z } from "zod";
 
 type FormState = {
   message: string | null;
@@ -18,7 +18,7 @@ const UserSchema = z.object({
   phone_number: z.string(),
   email: z.string(),
   password: z.string(),
-})
+});
 
 export async function signup(prevState: FormState, formData: FormData) {
   const supabase = createClient();
@@ -33,7 +33,7 @@ export async function signup(prevState: FormState, formData: FormData) {
   };
 
   try {
-    UserSchema.parse(data)
+    UserSchema.parse(data);
     const { error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
@@ -50,17 +50,19 @@ export async function signup(prevState: FormState, formData: FormData) {
     if (error) {
       return {
         message: null,
-        error: error.message === 'fetch failed' ? 'No network connection' : error.message,
-        status: 'failed',
-      }
+        error:
+          error.message === "fetch failed"
+            ? "No network connection"
+            : error.message,
+        status: "failed",
+      };
     }
-
-  } catch(e) {
-      return {
-        message: `${e}`,
-        error: 'Sign up failed, check inputs and try again',
-        status: 'failed',
-      }
+  } catch (e) {
+    return {
+      message: `${e}`,
+      error: "Sign up failed, check inputs and try again",
+      status: "failed",
+    };
   }
   revalidatePath("/", "layout");
   redirect("/private");

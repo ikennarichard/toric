@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import { login } from "./actions";
@@ -9,16 +9,16 @@ import { useEffect } from "react";
 
 export default function LoginPage() {
   const [formState, formAction] = useFormState(login, {
-    error: '',
+    error: "",
     message: null,
-    status: ''
-  })
+    status: "",
+  });
 
   useEffect(() => {
-    if (formState.status === 'failed') {
-      toast.error(formState.error)
+    if (formState.status === "failed") {
+      toast.error(formState.error);
     }
-  }, [formState])
+  }, [formState]);
 
   return (
     <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 m-auto">

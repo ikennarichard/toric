@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import { Toaster } from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
 
 interface ToasterProviderProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-export default function ToasterProvider({children}: ToasterProviderProps) {
+export default function ToasterProvider({ children }: ToasterProviderProps) {
   return (
     <>
       {children}
-      <Toaster/>
+      <Toaster />
     </>
-  )
+  );
 }
