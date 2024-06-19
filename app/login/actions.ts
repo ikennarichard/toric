@@ -5,7 +5,14 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 
-export async function login(formData: FormData) {
+
+type FormState = {
+  error: string;
+  message: string | null;
+  status: string;
+}
+
+export async function login(prevState: FormState, formData: FormData) {
   const supabase = createClient();
 
   const data = {
@@ -13,12 +20,17 @@ export async function login(formData: FormData) {
     password: formData.get("password") as string,
   };
 
+  
+
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect("/login?message=Could not authenticate user");
+    return {
+      message: null,
+      error: error.message === 'fetch failed' ? 'No network connection' : error.message,
+      status: 'failed',
+    }
   }
-
   revalidatePath("/", "layout");
   redirect("/private");
 }

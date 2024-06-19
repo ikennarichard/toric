@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Header from "../components/Header";
+import SideNav from "../components/SideNav";
 
 export default async function PrivatePage() {
   const supabase = createClient();
@@ -18,7 +19,7 @@ export default async function PrivatePage() {
   return (
     <main className="p-12 grid grid-cols-[auto_1fr]">
       <div className="border border-blue-100 p-6">
-        <Header />
+        <SideNav />
       </div>
       <div className="border border-blue-100 p-4">
         <p className="text-white mt-3">Hello, {metadata.first_name!}</p>
