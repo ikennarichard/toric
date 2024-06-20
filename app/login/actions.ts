@@ -7,7 +7,6 @@ import { createClient } from "@/utils/supabase/server";
 
 type FormState = {
   error: string;
-  message: string | null;
   status: string;
 };
 
@@ -23,7 +22,6 @@ export async function login(prevState: FormState, formData: FormData) {
 
   if (error) {
     return {
-      message: null,
       error:
         error.message === "fetch failed"
           ? "No network connection"

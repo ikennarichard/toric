@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 type FormState = {
-  message: string | null;
   error: string;
   status: string;
 };
@@ -49,7 +48,6 @@ export async function signup(prevState: FormState, formData: FormData) {
 
     if (error) {
       return {
-        message: null,
         error:
           error.message === "fetch failed"
             ? "No network connection"
@@ -59,7 +57,6 @@ export async function signup(prevState: FormState, formData: FormData) {
     }
   } catch (e) {
     return {
-      message: `${e}`,
       error: "Sign up failed, check inputs and try again",
       status: "failed",
     };
