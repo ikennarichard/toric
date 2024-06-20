@@ -6,19 +6,31 @@ import toast from "react-hot-toast";
 import SubmitButton from "../components/SubmitButton";
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+
+type FormFields = {
+	email: string;
+  password: string;
+}
 
 export default function LoginPage() {
   const [formState, formAction] = useFormState(login, {
     error: "",
-    message: null,
     status: "",
   });
+
+  const {
+  	register,
+  	formState: {errors}
+   } = useForm<FormFields>({
+    mode: 'onChange'
+   });
 
   useEffect(() => {
     if (formState.status === "failed") {
       toast.error(formState.error);
     }
-  }, [formState]);
+  }, [formState]); 
 
   return (
     <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 m-auto">
@@ -26,7 +38,7 @@ export default function LoginPage() {
         Login
       </h2>
       <form action={formAction}>
-        <div className="mb-4">
+        <div className="mb-2">
           <label
             htmlFor="email"
             className="block text-gray-700 font-medium mb-2"
@@ -34,14 +46,21 @@ export default function LoginPage() {
             Email
           </label>
           <input
+            {...register("email", {
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Please enter a valid email address"
+              }
+            })}
             type="email"
             id="email"
-            name="email"
-            required
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+            {errors?.email && errors.email?.message}</p>
         </div>
-        <div className="mb-6">
+        <div className="mb-3">
           <label
             htmlFor="password"
             className="block text-gray-700 font-medium mb-2"
@@ -49,12 +68,19 @@ export default function LoginPage() {
             Password
           </label>
           <input
+            {...register("password", {
+              required: 'Password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be atleast 6 characters'
+              }
+            })}
             type="password"
             id="password"
-            name="password"
-            required
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+          {errors?.password && errors.password?.message}</p>
         </div>
         {/* <div className="flex items-center justify-between mb-4">
           <a href="#" className="text-blue-600 hover:underline">
