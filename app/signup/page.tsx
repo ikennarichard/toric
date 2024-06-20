@@ -1,28 +1,34 @@
 "use client";
 
-import { confirmSignup, signup } from "./actions";
+import { signup } from "./actions";
 import toast from "react-hot-toast";
 import SubmitButton from "../components/SubmitButton";
-// import { useRef } from "react";
+
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
-// import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 
-// type Inputs = {
-// 	firstname: string;
-// 	lastname: string;
-// 	email: string;
-// 	query: string;
-// 	message: string;
-// 	consent: boolean;
-// }
+type FormFields = {
+	firstname: string;
+	lastname: string;
+	email: string;
+	gender: string;
+	phone_number: string;
+  password: string;
+}
 
 export default function SignupPage() {
   const [formState, formAction] = useFormState(signup, {
-    message: null,
     error: "",
     status: "",
   });
+
+  const {
+  	register,
+  	formState: {errors}
+   } = useForm<FormFields>({
+    mode: 'onChange'
+   });
 
   useEffect(() => {
     if (formState.status === "failed") {
@@ -30,13 +36,8 @@ export default function SignupPage() {
     }
   }, [formState]);
 
-  // const {
-  // 	register,
-  // 	formState: {errors}
-  //  } = useForm<Inputs>();
-
   return (
-    <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-5 m-auto -mt-6">
+    <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-5 m-auto -mt-8">
       <form action={formAction}>
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
           Setup your account
@@ -52,10 +53,13 @@ export default function SignupPage() {
             <input
               type="text"
               id="firstname"
-              name="firstname"
-              required
+              {...register("firstname", {
+                required: 'Firstname is required'
+              })}
               className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+            <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+            {errors?.firstname && errors.firstname?.message}</p>
           </div>
           <div className="mb-2">
             <label
@@ -65,12 +69,15 @@ export default function SignupPage() {
               Last Name
             </label>
             <input
+              {...register("lastname", {
+                required: 'Lastname is required'
+              })}
               type="text"
               id="lastname"
-              name="lastname"
-              required
               className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+            <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+            {errors?.lastname && errors.lastname?.message}</p>
           </div>
         </div>
 
@@ -82,15 +89,19 @@ export default function SignupPage() {
             Gender
           </label>
           <select
-            id="gender"
-            name="gender"
+            {...register("gender", {
+              required: 'Gender is required',
+            })}
             required
+            id="gender"
             className="w-full px-3 py-2 border text-lg rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="">Please select your gender</option>
+            <option value=''>Please select your gender</option>
             <option value="male">M</option>
             <option value="female">F</option>
           </select>
+          <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+          {errors?.gender && errors.gender?.message}</p>
         </div>
         <div className="mb-2">
           <label
@@ -100,12 +111,19 @@ export default function SignupPage() {
             Phone Number
           </label>
           <input
+            {...register("phone_number", {
+              required: 'Phone number is required',
+              minLength: {
+                value: 11,
+                message: 'Phone number must be 11 digits'
+              }
+            })}
             type="number"
             id="phone_number"
-            name="phone_number"
-            required
             className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+          {errors?.phone_number && errors.phone_number?.message}</p>
         </div>
         <div className="mb-2">
           <label
@@ -115,12 +133,19 @@ export default function SignupPage() {
             Email
           </label>
           <input
+            {...register("email", {
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Please enter a valid email address"
+              }
+            })}
             type="email"
             id="email"
-            name="email"
-            required
             className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+          {errors?.email && errors.email?.message}</p>
         </div>
         <div className="mb-2">
           <label
@@ -130,16 +155,23 @@ export default function SignupPage() {
             Password
           </label>
           <input
+            {...register("password", {
+              required: 'Password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be atleast 6 characters'
+              }
+            })}
             type="password"
             id="password"
-            name="password"
-            required
+            placeholder="Password must be atleast 6 characters"
             className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
+          {errors?.password && errors.password?.message}</p>
         </div>
         <SubmitButton text="Continue" />
       </form>
-      {/* )} */}
     </div>
   );
 }
