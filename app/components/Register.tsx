@@ -12,7 +12,9 @@ export default function Register() {
           {pathname !== "/login" ? <Link href="/login">Login</Link> : null}
         </li>
         <li className="hover:underline">
-          {pathname !== "/signup" ? <Link href="/signup">Get Started</Link> : null}
+          {pathname !== "/signup" ? (
+            <Link href="/signup">Get Started</Link>
+          ) : null}
         </li>
       </ul>
     </div>

@@ -6,17 +6,17 @@ import SubmitButton from "../components/SubmitButton";
 
 import { useFormState } from "react-dom";
 import { useEffect, useState } from "react";
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 import ToggleVisibility from "../components/ToggleVisibility";
 
 type FormFields = {
-	firstname: string;
-	lastname: string;
-	email: string;
-	gender: string;
-	phone_number: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  gender: string;
+  phone_number: string;
   password: string;
-}
+};
 
 export default function SignupPage() {
   const [formState, formAction] = useFormState(signup, {
@@ -26,11 +26,11 @@ export default function SignupPage() {
   const [isVisible, setIsVisible] = useState(false);
 
   const {
-  	register,
-  	formState: {errors}
-   } = useForm<FormFields>({
-    mode: 'onChange'
-   });
+    register,
+    formState: { errors },
+  } = useForm<FormFields>({
+    mode: "onChange",
+  });
 
   useEffect(() => {
     if (formState.status === "failed") {
@@ -56,12 +56,13 @@ export default function SignupPage() {
               type="text"
               id="firstname"
               {...register("firstname", {
-                required: 'Firstname is required'
+                required: "Firstname is required",
               })}
               className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
-            {errors?.firstname && errors.firstname?.message}</p>
+              {errors?.firstname && errors.firstname?.message}
+            </p>
           </div>
           <div className="mb-2">
             <label
@@ -72,14 +73,15 @@ export default function SignupPage() {
             </label>
             <input
               {...register("lastname", {
-                required: 'Lastname is required'
+                required: "Lastname is required",
               })}
               type="text"
               id="lastname"
               className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
-            {errors?.lastname && errors.lastname?.message}</p>
+              {errors?.lastname && errors.lastname?.message}
+            </p>
           </div>
         </div>
 
@@ -92,18 +94,19 @@ export default function SignupPage() {
           </label>
           <select
             {...register("gender", {
-              required: 'Gender is required',
+              required: "Gender is required",
             })}
             required
             id="gender"
             className="w-full px-3 py-2 border text-lg rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value=''>Please select your gender</option>
+            <option value="">Please select your gender</option>
             <option value="male">M</option>
             <option value="female">F</option>
           </select>
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
-          {errors?.gender && errors.gender?.message}</p>
+            {errors?.gender && errors.gender?.message}
+          </p>
         </div>
         <div className="mb-2">
           <label
@@ -114,18 +117,19 @@ export default function SignupPage() {
           </label>
           <input
             {...register("phone_number", {
-              required: 'Phone number is required',
+              required: "Phone number is required",
               maxLength: {
                 value: 11,
-                message: 'Phone number must be 11 digits'
-              }
+                message: "Phone number must be 11 digits",
+              },
             })}
             type="number"
             id="phone_number"
             className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
-          {errors?.phone_number && errors.phone_number?.message}</p>
+            {errors?.phone_number && errors.phone_number?.message}
+          </p>
         </div>
         <div className="mb-2">
           <label
@@ -136,18 +140,19 @@ export default function SignupPage() {
           </label>
           <input
             {...register("email", {
-              required: 'Email is required',
+              required: "Email is required",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Please enter a valid email address"
-              }
+                message: "Please enter a valid email address",
+              },
             })}
             type="email"
             id="email"
             className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
-          {errors?.email && errors.email?.message}</p>
+            {errors?.email && errors.email?.message}
+          </p>
         </div>
         <div className="relative mb-2">
           <label
@@ -158,20 +163,24 @@ export default function SignupPage() {
           </label>
           <input
             {...register("password", {
-              required: 'Password is required',
+              required: "Password is required",
               minLength: {
                 value: 6,
-                message: 'Password must be atleast 6 characters'
-              }
+                message: "Password must be atleast 6 characters",
+              },
             })}
             type={isVisible ? "text" : "password"}
             id="password"
             placeholder="Password must be atleast 6 characters"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
-          <ToggleVisibility isVisible={isVisible} handleOnClick={() => setIsVisible(prev => !prev)} />
+          <ToggleVisibility
+            isVisible={isVisible}
+            handleOnClick={() => setIsVisible((prev) => !prev)}
+          />
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
-          {errors?.password && errors.password?.message}</p>
+            {errors?.password && errors.password?.message}
+          </p>
         </div>
         <SubmitButton text="Continue" />
       </form>
