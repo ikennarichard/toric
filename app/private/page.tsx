@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import Header from "../components/Header";
 import SideNav from "../components/SideNav";
 
 export default async function PrivatePage() {
