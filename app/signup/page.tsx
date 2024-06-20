@@ -5,8 +5,9 @@ import toast from "react-hot-toast";
 import SubmitButton from "../components/SubmitButton";
 
 import { useFormState } from "react-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
+import ToggleVisibility from "../components/ToggleVisibility";
 
 type FormFields = {
 	firstname: string;
@@ -22,6 +23,7 @@ export default function SignupPage() {
     error: "",
     status: "",
   });
+  const [isVisible, setIsVisible] = useState(false);
 
   const {
   	register,
@@ -113,7 +115,7 @@ export default function SignupPage() {
           <input
             {...register("phone_number", {
               required: 'Phone number is required',
-              minLength: {
+              maxLength: {
                 value: 11,
                 message: 'Phone number must be 11 digits'
               }
@@ -147,7 +149,7 @@ export default function SignupPage() {
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
           {errors?.email && errors.email?.message}</p>
         </div>
-        <div className="mb-2">
+        <div className="relative mb-2">
           <label
             htmlFor="password"
             className="block text-gray-700 font-medium mb-2"
@@ -162,11 +164,12 @@ export default function SignupPage() {
                 message: 'Password must be atleast 6 characters'
               }
             })}
-            type="password"
+            type={isVisible ? "text" : "password"}
             id="password"
             placeholder="Password must be atleast 6 characters"
-            className="w-full px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          <ToggleVisibility isVisible={isVisible} handleOnClick={() => setIsVisible(prev => !prev)} />
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
           {errors?.password && errors.password?.message}</p>
         </div>

@@ -5,8 +5,9 @@ import { login } from "./actions";
 import toast from "react-hot-toast";
 import SubmitButton from "../components/SubmitButton";
 import { useFormState } from "react-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import ToggleVisibility from "../components/ToggleVisibility";
 
 type FormFields = {
 	email: string;
@@ -18,6 +19,7 @@ export default function LoginPage() {
     error: "",
     status: "",
   });
+  const [isVisible, setIsVisible] = useState(false);
 
   const {
   	register,
@@ -60,7 +62,7 @@ export default function LoginPage() {
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
             {errors?.email && errors.email?.message}</p>
         </div>
-        <div className="mb-3">
+        <div className="relative mb-3">
           <label
             htmlFor="password"
             className="block text-gray-700 font-medium mb-2"
@@ -75,10 +77,11 @@ export default function LoginPage() {
                 message: 'Password must be atleast 6 characters'
               }
             })}
-            type="password"
+            type={isVisible ? "text" : "password"}
             id="password"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          <ToggleVisibility isVisible={isVisible} handleOnClick={() => setIsVisible(prev => !prev)} />
           <p className="text-red-500 h-1 w-fit text-sm pb-2 border-solid border-red-400 mt-1">
           {errors?.password && errors.password?.message}</p>
         </div>
