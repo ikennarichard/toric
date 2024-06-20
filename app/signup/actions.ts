@@ -14,7 +14,7 @@ const UserSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
   gender: z.string(),
-  phone_number: z.string(),
+  phone_number: z.string().length(11),
   email: z.string(),
   password: z.string(),
 });
